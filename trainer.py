@@ -269,5 +269,6 @@ def main():
     log.warning("dataset: %s", config.dataset)
     trainer.train()
 
+
 if __name__ == '__main__':
     main()

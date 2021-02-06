@@ -17,7 +17,7 @@ def argparser(is_train=True):
     parser.add_argument('--prefix', type=str, default='default',
                         help='a nickname for the training')
     parser.add_argument('--dataset', type=str, default='car', choices=[
-        'car', 'chair', 'kitti', 'synthia'],
+        'car', 'chair', 'ship', 'kitti', 'synthia'],
         help='you can add your own dataset here')
     parser.add_argument('--num_input', type=int, default=2,
                         help='the number of source images')
@@ -115,7 +115,7 @@ def argparser(is_train=True):
 
     config = parser.parse_args()
 
-    if config.dataset in ['car', 'chair']:
+    if config.dataset in ['car', 'chair', 'ship']:
         config.dataset_type = 'object'
         import datasets.object_loader as dataset
     elif config.dataset in ['kitti', 'synthia']:

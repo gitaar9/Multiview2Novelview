@@ -9,9 +9,11 @@ import imageio
 import tensorflow as tf
 import tensorflow.contrib.slim as slim
 
+from datasets.object_loader import Dataset
 from input_ops import create_input_ops
 from config import argparser
 from util import log
+from PIL import Image
 
 
 class Evaler(object):
@@ -98,6 +100,8 @@ class Evaler(object):
                         batch_chunk = self.get_batch_chunk(batch_id_list)
                     else:
                         batch_chunk = self.get_batch_chunk()
+
+                    print(batch_chunk['image'].shape)
 
                     # inference
                     step, loss, img, batch_id, step_time = \
@@ -224,14 +228,36 @@ class Evaler(object):
                     f.write(final_msg)
 
 
+def to_rgb_ints(img):
+    img = (1 - img) / 2 * 255  # Reverse the normalization step
+    img = img.astype(np.uint8)
+
+    return img
+
+
 def main():
 
     config, model, _, dataset_test = argparser(is_train=False)
 
     evaler = Evaler(config, model, dataset_test)
 
+    ds = evaler.dataset
+
+    id = 'df8fdfbda6e15f38fc740ecd0dc695a2_26_0'
+    id = 'b0e8c331eacdc9bef3e39f2e17005efc_5_0'
+    id = '45351c87f019646115aa5b227c027ee0_10_0'
+    img, pose = ds.get_data(id)
+    print("pose shape 1hot", pose.shape)
+    print("img shape concatenated", img.shape)
+
+    image = Image.fromarray(to_rgb_ints(img[:,:,:3]), 'RGB')
+    image.show()
+    image = Image.fromarray(to_rgb_ints(img[:,:,3:]), 'RGB')
+    image.show()
+
     log.warning("dataset: %s", config.dataset)
-    evaler.eval_run()
+    # evaler.eval_run()
+
 
 if __name__ == '__main__':
     main()
