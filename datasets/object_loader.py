@@ -10,7 +10,7 @@ import h5py
 from util import log
 
 if 's2576597' in getcwd():
-    '/data/s2576597/mv2nv/datasets/shapenet'
+    __PATH__ = '/data/s2576597/mv2nv/datasets/shapenet'
 else:
     __PATH__ = './datasets/shapenet'
 
