@@ -2,13 +2,18 @@ from __future__ import absolute_import
 from __future__ import division
 from __future__ import print_function
 
+from os import getcwd
 import os.path as osp
 import numpy as np
 import h5py
 
 from util import log
 
-__PATH__ = './datasets/shapenet'
+if 's2576597' in getcwd():
+    '/data/s2576597/mv2nv/datasets/shapenet'
+else:
+    __PATH__ = './datasets/shapenet'
+
 ang_interval = 10
 ang_skip = 2
 rs = np.random.RandomState(123)
