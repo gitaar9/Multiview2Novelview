@@ -25,8 +25,13 @@ class Trainer(object):
             config.learning_rate_p,
             config.learning_rate_d,
         )
+        if 's2576597' in os.getcwd():
+            train_dir_suffix = '/data/s2576597'
+        else:
+            train_dir_suffix = '.'
 
-        self.train_dir = './train_dir/%s-%s-%s-num_input-%s-%s' % (
+        self.train_dir = '%s/train_dir/%s-%s-%s-num_input-%s-%s' % (
+            train_dir_suffix,
             config.dataset,
             config.prefix,
             hyper_parameter_str,

@@ -10,4 +10,4 @@ ml TensorFlow/1.10.1-fosscuda-2018a-Python-2.7.14
 
 source venv/bin/activate
 
-python -u trainer.py  --batch_size 8 --dataset ship --num_input 4
+python -u trainer.py  --batch_size 8 --dataset chair --num_input 4

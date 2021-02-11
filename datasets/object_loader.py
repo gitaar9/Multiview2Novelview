@@ -45,7 +45,7 @@ class Dataset(object):
             id = id.decode("utf-8")
         # preprocessing and data augmentation
         image = 1 - self.data[id]['image'].value/255.*2
-        pose = np.expand_dims(self.data[id]['pose'].value, -1)
+        pose = np.expand_dims(self.data[id]['pose'].value.astype('i8'), -1)
         idx = np.concatenate(
             (np.linspace(-self.bound, 0, self.bound+1)[:-1],
              np.linspace(0, self.bound, self.bound+1)[1:])
@@ -58,7 +58,7 @@ class Dataset(object):
             h = id.split('_')[-1]
             id_target = '_'.join([id_base, str(a % 36), str(h)])
             image_tmp = 1 - self.data[id_target]['image'].value/255.*2
-            pose_tmp = np.expand_dims(self.data[id_target]['pose'].value, -1)
+            pose_tmp = np.expand_dims(self.data[id_target]['pose'].value.astype('i8'), -1)
             image = np.concatenate((image, image_tmp), axis=-1)
             pose = np.concatenate((pose, pose_tmp), axis=-1)
         # pose to one hot vector
@@ -75,12 +75,12 @@ class Dataset(object):
         # taget idx: [diff ang, diff evelation]
         id = id_list[0]
         image = 1 - self.data[id]['image'].value/255.*2
-        pose = np.expand_dims(self.data[id]['pose'].value, -1)
+        pose = np.expand_dims(self.data[id]['pose'].value.astype('i8'), -1)
 
         for id_source in id_list[1:]:
             if not pose.shape[-1] > self.n:
                 image_tmp = 1 - self.data[id_source]['image'].value/255.*2
-                pose_tmp = np.expand_dims(self.data[id_source]['pose'].value, -1)
+                pose_tmp = np.expand_dims(self.data[id_source]['pose'].value.astype('i8'), -1)
                 image = np.concatenate((image, image_tmp), axis=-1)
                 pose = np.concatenate((pose, pose_tmp), axis=-1)
         # pose to one hot vector
