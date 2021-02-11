@@ -10,4 +10,5 @@ ml TensorFlow/1.10.1-fosscuda-2018a-Python-2.7.14
 
 source venv/bin/activate
 
-python -u trainer.py  --batch_size 8 --dataset chair --num_input 4
+python -u trainer.py  --batch_size 8 --dataset chair --num_input 4 \
+--learning_rate_f 0.00005 --learning_rate_p 0.0001
