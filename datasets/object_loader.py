@@ -19,6 +19,12 @@ ang_skip = 2
 rs = np.random.RandomState(123)
 
 
+def normalize_image(image):
+    # image = 1 - self.data[id]['image'].value/255.*2
+    image *= 1.
+    return np.interp(image, (image.min(), image.max()), (-1., 1.))
+
+
 class Dataset(object):
 
     def __init__(self, ids, n, object_class, name='default',
@@ -44,7 +50,7 @@ class Dataset(object):
         if isinstance(id, bytes):
             id = id.decode("utf-8")
         # preprocessing and data augmentation
-        image = 1 - self.data[id]['image'].value/255.*2
+        image = normalize_image(self.data[id]['image'].value)
         pose = np.expand_dims(self.data[id]['pose'].value.astype('i8'), -1)
         idx = np.concatenate(
             (np.linspace(-self.bound, 0, self.bound+1)[:-1],
@@ -57,7 +63,8 @@ class Dataset(object):
             id_base = id.split('_')[0]
             h = id.split('_')[-1]
             id_target = '_'.join([id_base, str(a % 36), str(h)])
-            image_tmp = 1 - self.data[id_target]['image'].value/255.*2
+            image_tmp = normalize_image(self.data[id_target]['image'].value)
+
             pose_tmp = np.expand_dims(self.data[id_target]['pose'].value.astype('i8'), -1)
             image = np.concatenate((image, image_tmp), axis=-1)
             pose = np.concatenate((pose, pose_tmp), axis=-1)
@@ -74,12 +81,12 @@ class Dataset(object):
         # preprocessing and data augmentation
         # taget idx: [diff ang, diff evelation]
         id = id_list[0]
-        image = 1 - self.data[id]['image'].value/255.*2
+        image = normalize_image(self.data[id]['image'].value)
         pose = np.expand_dims(self.data[id]['pose'].value.astype('i8'), -1)
 
         for id_source in id_list[1:]:
             if not pose.shape[-1] > self.n:
-                image_tmp = 1 - self.data[id_source]['image'].value/255.*2
+                image_tmp = normalize_image(self.data[id_source]['image'].value)
                 pose_tmp = np.expand_dims(self.data[id_source]['pose'].value.astype('i8'), -1)
                 image = np.concatenate((image, image_tmp), axis=-1)
                 pose = np.concatenate((pose, pose_tmp), axis=-1)
