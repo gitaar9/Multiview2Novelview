@@ -22,7 +22,7 @@ rs = np.random.RandomState(123)
 def normalize_image(image):
     # image = 1 - self.data[id]['image'].value/255.*2
     # image = image / 255.
-    return np.interp(image, (image.min(), image.max()), (-1., 1.))
+    return np.interp(image, (image.min(), image.max()), (1., -1.))
 
 
 class Dataset(object):
