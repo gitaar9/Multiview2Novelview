@@ -1,6 +1,6 @@
 #!/bin/bash
 
-#SBATCH --time=23:00:00
+#SBATCH --time=47:00:00
 #SBATCH --partition=gpu
 #SBATCH --gres=gpu:v100:1
 #SBATCH --mem=32GB
@@ -11,4 +11,5 @@ ml TensorFlow/1.10.1-fosscuda-2018a-Python-2.7.14
 source venv/bin/activate
 
 python -u trainer.py  --batch_size 8 --dataset ship --num_input 4 \
---learning_rate_f 0.00005 --learning_rate_p 0.0001
+--learning_rate_f 0.00005 --learning_rate_p 0.0001 \
+--checkpoint /data/s2576597/train_dir/ship-default-bs_8_lr_flow_5e-05_pixel_0.0001_d_0.0001-num_input-4-20210212-105242/model-70000
