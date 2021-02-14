@@ -12,4 +12,5 @@ source venv/bin/activate
 
 python -u trainer.py  --batch_size 8 --dataset ship --num_input 4 \
 --learning_rate_f 0.00005 --learning_rate_p 0.0001 \
---checkpoint /data/s2576597/train_dir/ship-default-bs_8_lr_flow_5e-05_pixel_0.0001_d_0.0001-num_input-4-20210212-105242/model-70000
+--checkpoint /data/s2576597/train_dir/ship-default-bs_8_lr_flow_5e-05_pixel_0.0001_d_0.0001-num_input-4-20210213-173751/model-60000 \
+--gan_start_step 0
